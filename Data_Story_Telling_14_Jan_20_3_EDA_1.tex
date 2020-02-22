@@ -1,0 +1,1201 @@
+
+    
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    \usepackage[breakable]{tcolorbox}
+    \tcbset{nobeforeafter} % prevents tcolorboxes being placing in paragraphs
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Data\_Story\_Telling\_14\_Jan\_20\_3\_EDA\_1}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \newcommand{\prompt}[4]{
+        \llap{{\color{#2}[#3]: #4}}\vspace{-1.25em}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    Goals For Housing Dataset - EDA 1. Summary statistics Of Dataset- Non
+Graphical \& Graphical 2. Ouliers Count in the Numericals Features 3.
+Multicolinearity 4. Frequency Distribution in the Categorical Features
+5. Find out Features those having more imapct on target variable
+
+    Import necessary Packages 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt} 
+\PY{k+kn}{import} \PY{n+nn}{re}
+\PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{defaultdict}
+\PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter} 
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{k+kn}{import} \PY{n+nn}{warnings}
+\PY{n}{warnings}\PY{o}{.}\PY{n}{simplefilter}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ignore}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Import the test and train Dataset 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{test} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D:}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{HATHWAY ISP}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{DSC}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Project}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Housing}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s1}{test.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{train} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D:}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{HATHWAY ISP}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{DSC}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Project}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{Housing}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s1}{train.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    How many Observations and features in the Dataset?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{train}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{3}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+(1460, 81)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Write Functions to calculate Summary For Missing Value, Missing \%, Mean
+Value, Zero Values Count, Zero Values \%, 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{distinct\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n+nb}{len}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{missing\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}mean\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}max\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}min\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}zero\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{train\PYZus{}s} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}mode\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{n}{CO} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}
+    \PY{n}{data}\PY{p}{,} \PY{n}{count} \PY{o}{=} \PY{p}{(}\PY{n}{CO}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+    \PY{k}{return} \PY{n}{data}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}freq\PYZus{}dist}\PY{p}{(}\PY{n}{feature}\PY{p}{,}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{n}{feature}\PY{p}{)}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}median\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}std\PYZus{}mean\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}std\PYZus{}median\PYZus{}value}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)}\PY{p}{:}
+    \PY{n}{std} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{k}{for} \PY{n}{value} \PY{o+ow}{in} \PY{n}{train\PYZus{}s}\PY{p}{:}
+        \PY{n}{std} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{n}{value} \PY{o}{\PYZhy{}} \PY{n}{train\PYZus{}s}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} 
+        \PY{n}{std\PYZus{}md} \PY{o}{=} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{std}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1} \PY{p}{)} \PY{p}{)}
+    \PY{k}{return} \PY{n}{std\PYZus{}md}
+
+
+\PY{c+c1}{\PYZsh{} this function will return the min and max value outlier of the feature on single dimension }
+
+\PY{k}{def} \PY{n+nf}{feature\PYZus{}outlier\PYZus{}values}\PY{p}{(}\PY{n}{train\PYZus{}s}\PY{p}{,}\PY{n}{feature}\PY{p}{)}\PY{p}{:}
+    \PY{n}{outlier\PYZus{}Q3} \PY{o}{=} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+    \PY{n}{Q3} \PY{o}{=} \PY{n}{outlier\PYZus{}Q3}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}
+    \PY{n}{outlier\PYZus{}Q1} \PY{o}{=} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+    \PY{n}{Q1} \PY{o}{=} \PY{n}{outlier\PYZus{}Q1}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}
+    \PY{n}{IQR} \PY{o}{=} \PY{n}{Q3}\PY{o}{\PYZhy{}}\PY{n}{Q1}
+    \PY{n}{High} \PY{o}{=} \PY{p}{(}\PY{n}{Q3}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{l+m+mf}{1.5} \PY{o}{*} \PY{n}{IQR}\PY{p}{)}
+    \PY{n}{Low} \PY{o}{=} \PY{p}{(}\PY{n}{Q1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{l+m+mf}{1.5} \PY{o}{*} \PY{n}{IQR}\PY{p}{)}
+    \PY{k}{if} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n}{Low}\PY{p}{:}
+        \PY{n}{Low} \PY{o}{=} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}
+    \PY{k}{if} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{High}\PY{p}{:}
+        \PY{n}{High} \PY{o}{=} \PY{n}{train\PYZus{}s}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}
+    \PY{k}{return} \PY{n}{High} \PY{p}{,} \PY{n}{Low}
+
+\PY{c+c1}{\PYZsh{} this function will return Dataframe of features containing outlier count in both direction  }
+
+\PY{k}{def} \PY{n+nf}{get\PYZus{}outlier\PYZus{}num}\PY{p}{(}\PY{n}{train}\PY{p}{)}\PY{p}{:}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Min\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Max\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{}l = len(list(train.select\PYZus{}dtypes(exclude = [\PYZdq{}object\PYZdq{}]).columns))}
+    \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+    \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{exclude} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{object}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+            \PY{n}{High} \PY{p}{,} \PY{n}{Low} \PY{o}{=} \PY{n}{feature\PYZus{}outlier\PYZus{}values}\PY{p}{(}\PY{n}{train}\PY{p}{,}\PY{n}{feature}\PY{p}{)}
+            \PY{n}{out\PYZus{}high} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{High}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+            \PY{n}{out\PYZus{}Low} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{Low}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+            \PY{n}{s} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZlt{}\PYZhy{}Minimum\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}Maximum\PYZhy{}\PYZgt{}}\PY{l+s+s1}{\PYZsq{}} 
+            \PY{k}{if} \PY{p}{(} \PY{n}{out\PYZus{}high}\PY{o}{!=}\PY{l+m+mi}{0}\PY{p}{)} \PY{o}{|} \PY{p}{(}\PY{n}{out\PYZus{}Low}\PY{o}{!=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{feature}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Min\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{out\PYZus{}Low}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Max\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{out\PYZus{}high}
+                \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+    \PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Min\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Min\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+    \PY{k}{return} \PY{n}{data1}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Max\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Get Numeric Feature Info about Dataset }
+
+\PY{k}{def} \PY{n+nf}{Numeric\PYZus{}Info}\PY{p}{(}\PY{n}{train}\PY{p}{)}\PY{p}{:}
+    \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zero\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zeros\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distinct\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Std\PYZus{}From\PYZus{}Mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Median}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Std\PYZus{}From\PYZus{}Median}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{c+c1}{\PYZsh{},\PYZsq{}Maximum\PYZsq{}, \PYZsq{}Minimum\PYZsq{}, \PYZsq{}Outliers\PYZus{}Count\PYZus{}Max\PYZsq{}, \PYZsq{}Outliers\PYZus{}Count\PYZus{}Min\PYZsq{}])}
+    \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{exclude} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{object}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{}feature\PYZus{}info[feature] = [distinct\PYZus{}feature\PYZus{}values(train[feature])]}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}           \PY{o}{=} \PY{n}{feature}
+       \PY{c+c1}{\PYZsh{} data1.loc[i, \PYZsq{}Maximum\PYZsq{}]                = feature\PYZus{}max\PYZus{}value(train[feature])        }
+      \PY{c+c1}{\PYZsh{}  data1.loc[i, \PYZsq{}Minimum\PYZsq{}]                = feature\PYZus{}min\PYZus{}value(train[feature])}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}                   \PY{o}{=} \PY{n}{feature\PYZus{}mean\PYZus{}value}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Median}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}                 \PY{o}{=} \PY{n}{feature\PYZus{}median\PYZus{}value}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Std\PYZus{}From\PYZus{}Mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}          \PY{o}{=} \PY{n}{feature\PYZus{}std\PYZus{}mean\PYZus{}value}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Std\PYZus{}From\PYZus{}Median}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}        \PY{o}{=} \PY{n}{feature\PYZus{}std\PYZus{}median\PYZus{}value}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}              \PY{o}{=} \PY{n}{missing\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}          \PY{o}{=} \PY{n}{missing\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}        
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zero\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}                 \PY{o}{=} \PY{n}{feature\PYZus{}zero\PYZus{}value}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zeros\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}            \PY{o}{=} \PY{n}{feature\PYZus{}zero\PYZus{}value}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}        
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distinct\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}         \PY{o}{=} \PY{n}{distinct\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)} 
+        \PY{c+c1}{\PYZsh{}data1.loc[i, \PYZsq{}Outliers\PYZus{}Count\PYZus{}Max\PYZsq{}]     = distinct\PYZus{}feature\PYZus{}values(train[feature]) }
+        \PY{c+c1}{\PYZsh{}data1.loc[i, \PYZsq{}Outliers\PYZus{}Count\PYZus{}Min\PYZsq{}]     = distinct\PYZus{}feature\PYZus{}values(train[feature]) }
+        \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+    \PY{k}{return} \PY{n}{data1}
+
+\PY{k}{def} \PY{n+nf}{Categorical\PYZus{}Info}\PY{p}{(}\PY{n}{train}\PY{p}{)}\PY{p}{:}
+    \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distinct\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{include} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{object}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{}feature\PYZus{}info[feature] = [distinct\PYZus{}feature\PYZus{}values(train[feature])]}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{feature}
+        \PY{c+c1}{\PYZsh{}data1.loc[i, \PYZsq{}ferq\PYZus{}Dist\PYZsq{}]        = feature\PYZus{}freq\PYZus{}dist(feature, train)}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}             \PY{o}{=} \PY{n}{feature\PYZus{}mode\PYZus{}value}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}        \PY{o}{=} \PY{n}{missing\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}    \PY{o}{=} \PY{n}{missing\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}        
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distinct\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}   \PY{o}{=} \PY{n}{distinct\PYZus{}feature\PYZus{}values}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)} 
+        \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+    \PY{k}{return} \PY{n}{data1}
+
+\PY{c+c1}{\PYZsh{} Summirize the Frequency distribution of each categorical feature }
+
+\PY{k}{def} \PY{n+nf}{freq\PYZus{}dist}\PY{p}{(}\PY{n}{train}\PY{p}{)}\PY{p}{:}
+    \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cat\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cat\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{include} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{object}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+        \PY{n}{f} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{n}{feature}\PY{p}{)}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+        \PY{n}{c} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{n}{feature}\PY{p}{)}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{fc} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{c}\PY{p}{)}
+        \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{item} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fc}\PY{p}{)}\PY{p}{:}
+            \PY{n}{cat} \PY{p}{,} \PY{n}{co} \PY{o}{=} \PY{n}{item}
+            \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{feature}
+            \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cat\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}         \PY{o}{=} \PY{n}{cat}
+            \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cat\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}        \PY{o}{=} \PY{n}{co}
+            \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+    \PY{k}{return} \PY{n}{data1}
+
+\PY{c+c1}{\PYZsh{} Write a function Calculate the Co variance }
+\PY{k}{def} \PY{n+nf}{Co\PYZus{}Variance\PYZus{}Info\PYZus{}ex}\PY{p}{(}\PY{n}{data}\PY{p}{,}\PY{n}{corr\PYZus{}v}\PY{p}{)}\PY{p}{:}
+    \PY{n}{corr\PYZus{}value1} \PY{o}{=} \PY{n}{corr\PYZus{}v}
+    \PY{n}{corr\PYZus{}value2} \PY{o}{=} \PY{n}{corr\PYZus{}v} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+    \PY{n}{num\PYZus{}features} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{exclude} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{object}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{columns}\PY{p}{)} 
+    \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{num\PYZus{}features}\PY{p}{]}
+    \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+    \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{corr\PYZus{}value1} \PY{p}{:}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{row}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{col}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}       \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]}
+                \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+            \PY{k}{if} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{corr\PYZus{}value2} \PY{p}{:}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{row}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{col}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}       \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]}
+                \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{1}\PY{p}{]}
+    \PY{n}{set\PYZus{}target\PYZus{}v} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SalePrice}\PY{l+s+s1}{\PYZsq{}}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{p}{(}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{set\PYZus{}target\PYZus{}v}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{set\PYZus{}target\PYZus{}v}\PY{p}{)}\PY{p}{]}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n+nb}{frozenset}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+    \PY{n}{data1} \PY{o}{=} \PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{data1}\PY{p}{)}\PY{p}{)}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{[}\PY{n+nb}{list}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{data1}\PY{p}{]}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{}t = data1[\PYZsq{}Co\PYZus{}Variance\PYZsq{}][0] \PYZsh{}= data1[\PYZsq{}Co\PYZus{}Variance\PYZsq{}][0]}
+    \PY{c+c1}{\PYZsh{}data1[\PYZsq{}Co\PYZus{}Variance\PYZsq{}][0] = data1[\PYZsq{}B\PYZsq{}][0]}
+    \PY{c+c1}{\PYZsh{}data1[\PYZsq{}B\PYZsq{}][0] = t}
+    \PY{k}{return} \PY{n}{data1}
+
+\PY{k}{def} \PY{n+nf}{Co\PYZus{}Variance\PYZus{}Info}\PY{p}{(}\PY{n}{data}\PY{p}{,}\PY{n}{corr\PYZus{}v}\PY{p}{)}\PY{p}{:}
+    \PY{n}{corr\PYZus{}value1} \PY{o}{=} \PY{n}{corr\PYZus{}v}
+    \PY{n}{corr\PYZus{}value2} \PY{o}{=} \PY{n}{corr\PYZus{}v} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+    \PY{n}{num\PYZus{}features} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{exclude} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{object}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{columns}\PY{p}{)} 
+    \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{num\PYZus{}features}\PY{p}{]}
+    \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+    \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{corr\PYZus{}value1} \PY{p}{:}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{row}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{col}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}       \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]}
+                \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+            \PY{k}{if} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{corr\PYZus{}value2} \PY{p}{:}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{row}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{col}
+                \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}       \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{]}
+                \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{1}\PY{p}{]}
+    \PY{n}{set\PYZus{}target\PYZus{}v} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SalePrice}\PY{l+s+s1}{\PYZsq{}}
+    \PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{p}{(}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{set\PYZus{}target\PYZus{}v}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{set\PYZus{}target\PYZus{}v}\PY{p}{)}\PY{p}{]}
+    \PY{c+c1}{\PYZsh{}data1 = data1.apply(frozenset, axis=1)}
+    \PY{c+c1}{\PYZsh{}data1 = (set(series\PYZus{}set))}
+    \PY{k}{return} \PY{n}{data1}
+
+\PY{k}{def} \PY{n+nf}{freq\PYZus{}dist1}\PY{p}{(}\PY{n}{train}\PY{p}{)}\PY{p}{:}
+    \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+    
+    \PY{n}{data\PYZus{}cat} \PY{o}{=} \PY{n}{Categorical\PYZus{}Info}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+    \PY{n}{ma\PYZus{}x} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{data\PYZus{}cat}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distinct\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{n}{col} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ma\PYZus{}x}\PY{p}{)}\PY{p}{:}
+        \PY{n}{col}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{m}\PY{p}{)} 
+    \PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{ma\PYZus{}x}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{col}\PY{p}{)}
+    \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{include} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{object}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{:}
+        \PY{n}{f} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{n}{feature}\PY{p}{)}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+        \PY{n}{c} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{n}{feature}\PY{p}{)}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{fc} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{c}\PY{p}{)}
+        \PY{n}{j}\PY{o}{=}\PY{l+m+mi}{0}
+        \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     \PY{o}{=} \PY{n}{feature}
+        \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{item} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{fc}\PY{p}{)}\PY{p}{:}
+            \PY{n}{cat} \PY{p}{,} \PY{n}{co} \PY{o}{=} \PY{n}{item}
+            \PY{c+c1}{\PYZsh{}data1.loc[i, \PYZsq{}Feature\PYZus{}Name\PYZsq{}]     = feature}
+            \PY{c+c1}{\PYZsh{}data1.loc[i, \PYZsq{}Cat\PYZus{}Name\PYZsq{}]         = cat}
+            \PY{n}{data1}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]}        \PY{o}{=} \PY{n}{co}\PY{o}{*}\PY{l+m+mi}{100}\PY{o}{/}\PY{l+m+mi}{1459}
+            \PY{n}{j}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+        \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+        
+    \PY{k}{return} \PY{n}{data1}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Numerical Feature summary statistics 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data\PYZus{}num}\PY{o}{=}\PY{n}{Numeric\PYZus{}Info}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+\PY{n}{data\PYZus{}num}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+               Missing\_\%  Missing\_Count     Zero\_\%  Zeros\_Count  \textbackslash{}
+Feature\_Name
+LotFrontage    17.739726          259.0   0.000000          0.0
+GarageYrBlt     5.547945           81.0   0.000000          0.0
+MasVnrArea      0.547945            8.0  58.972603        861.0
+Id              0.000000            0.0   0.000000          0.0
+OpenPorchSF     0.000000            0.0  44.931507        656.0
+KitchenAbvGr    0.000000            0.0   0.068493          1.0
+TotRmsAbvGrd    0.000000            0.0   0.000000          0.0
+Fireplaces      0.000000            0.0  47.260274        690.0
+GarageCars      0.000000            0.0   5.547945         81.0
+GarageArea      0.000000            0.0   5.547945         81.0
+WoodDeckSF      0.000000            0.0  52.123288        761.0
+EnclosedPorch   0.000000            0.0  85.753425       1252.0
+HalfBath        0.000000            0.0  62.534247        913.0
+3SsnPorch       0.000000            0.0  98.356164       1436.0
+ScreenPorch     0.000000            0.0  92.054795       1344.0
+PoolArea        0.000000            0.0  99.520548       1453.0
+MiscVal         0.000000            0.0  96.438356       1408.0
+MoSold          0.000000            0.0   0.000000          0.0
+YrSold          0.000000            0.0   0.000000          0.0
+BedroomAbvGr    0.000000            0.0   0.410959          6.0
+FullBath        0.000000            0.0   0.616438          9.0
+MSSubClass      0.000000            0.0   0.000000          0.0
+BsmtFinSF2      0.000000            0.0  88.561644       1293.0
+LotArea         0.000000            0.0   0.000000          0.0
+OverallQual     0.000000            0.0   0.000000          0.0
+OverallCond     0.000000            0.0   0.000000          0.0
+YearBuilt       0.000000            0.0   0.000000          0.0
+YearRemodAdd    0.000000            0.0   0.000000          0.0
+BsmtFinSF1      0.000000            0.0  31.986301        467.0
+BsmtUnfSF       0.000000            0.0   8.082192        118.0
+BsmtHalfBath    0.000000            0.0  94.383562       1378.0
+TotalBsmtSF     0.000000            0.0   2.534247         37.0
+1stFlrSF        0.000000            0.0   0.000000          0.0
+2ndFlrSF        0.000000            0.0  56.780822        829.0
+LowQualFinSF    0.000000            0.0  98.219178       1434.0
+GrLivArea       0.000000            0.0   0.000000          0.0
+BsmtFullBath    0.000000            0.0  58.630137        856.0
+SalePrice       0.000000            0.0   0.000000          0.0
+
+               Distinct\_Count           Mean  Std\_From\_Mean    Median  \textbackslash{}
+Feature\_Name
+LotFrontage             111.0      70.049958      24.284752      69.0
+GarageYrBlt              98.0    1978.506164      24.689725    1980.0
+MasVnrArea              328.0     103.685262     181.066207       0.0
+Id                     1460.0     730.500000     421.610009     730.5
+OpenPorchSF             202.0      46.660274      66.256028      25.0
+KitchenAbvGr              4.0       1.046575       0.220338       1.0
+TotRmsAbvGrd             12.0       6.517808       1.625393       6.0
+Fireplaces                4.0       0.613014       0.644666       1.0
+GarageCars                5.0       1.767123       0.747315       2.0
+GarageArea              441.0     472.980137     213.804841     480.0
+WoodDeckSF              274.0      94.244521     125.338794       0.0
+EnclosedPorch           120.0      21.954110      61.119149       0.0
+HalfBath                  3.0       0.382877       0.502885       0.0
+3SsnPorch                20.0       3.409589      29.317331       0.0
+ScreenPorch              76.0      15.060959      55.757415       0.0
+PoolArea                  8.0       2.758904      40.177307       0.0
+MiscVal                  21.0      43.489041     496.123024       0.0
+MoSold                   12.0       6.321918       2.703626       6.0
+YrSold                    5.0    2007.815753       1.328095    2008.0
+BedroomAbvGr              8.0       2.866438       0.815778       3.0
+FullBath                  4.0       1.565068       0.550916       2.0
+MSSubClass               15.0      56.897260      42.300571      50.0
+BsmtFinSF2              144.0      46.549315     161.319273       0.0
+LotArea                1073.0   10516.828082    9981.264932    9478.5
+OverallQual              10.0       6.099315       1.382997       6.0
+OverallCond               9.0       5.575342       1.112799       5.0
+YearBuilt               112.0    1971.267808      30.202904    1973.0
+YearRemodAdd             61.0    1984.865753      20.645407    1994.0
+BsmtFinSF1              637.0     443.639726     456.098091     383.5
+BsmtUnfSF               780.0     567.240411     441.866955     477.5
+BsmtHalfBath              3.0       0.057534       0.238753       0.0
+TotalBsmtSF             721.0    1057.429452     438.705324     991.5
+1stFlrSF                753.0    1162.626712     386.587738    1087.0
+2ndFlrSF                417.0     346.992466     436.528436       0.0
+LowQualFinSF             24.0       5.844521      48.623081       0.0
+GrLivArea               861.0    1515.463699     525.480383    1464.0
+BsmtFullBath              4.0       0.425342       0.518911       0.0
+SalePrice               663.0  180921.195890   79442.502883  163000.0
+
+               Std\_From\_Median
+Feature\_Name
+LotFrontage                NaN
+GarageYrBlt                NaN
+MasVnrArea                 NaN
+Id                  421.610009
+OpenPorchSF          69.709040
+KitchenAbvGr          0.225210
+TotRmsAbvGrd          1.705934
+Fireplaces            0.751968
+GarageCars            0.782783
+GarageArea          213.920131
+WoodDeckSF          156.837275
+EnclosedPorch        64.945081
+HalfBath              0.632130
+3SsnPorch            29.515066
+ScreenPorch          57.757054
+PoolArea             40.271985
+MiscVal             498.026755
+MoSold                2.722737
+YrSold                1.340823
+BedroomAbvGr          0.826647
+FullBath              0.701999
+MSSubClass           42.859574
+BsmtFinSF2          167.905425
+LotArea           10035.163865
+OverallQual           1.386560
+OverallCond           1.252824
+YearBuilt            30.252569
+YearRemodAdd         22.577078
+BsmtFinSF1          460.048621
+BsmtUnfSF           450.893854
+BsmtHalfBath          0.245592
+TotalBsmtSF         443.635023
+1stFlrSF            393.920549
+2ndFlrSF            557.712624
+LowQualFinSF         48.973318
+GrLivArea           527.996175
+BsmtFullBath          0.671050
+SalePrice         81440.166111
+\end{Verbatim}
+\end{tcolorbox}
+        
+    List the missing \% in Categorical Feature.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data\PYZus{}cat} \PY{o}{=} \PY{n}{Categorical\PYZus{}Info}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+\PY{n}{data\PYZus{}cat}\PY{o}{=}\PY{n}{data\PYZus{}cat}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{data\PYZus{}cat\PYZus{}mis}\PY{o}{=}\PY{n}{data\PYZus{}cat}\PY{p}{[}\PY{n}{data\PYZus{}cat}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{]}
+\PY{n}{data\PYZus{}cat\PYZus{}mis}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{6}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+                Mode  Missing\_\%  Missing\_Count  Distinct\_Count
+Feature\_Name
+PoolQC           NaN  99.520548         1453.0             4.0
+MiscFeature      NaN  96.301370         1406.0             5.0
+Alley            NaN  93.767123         1369.0             3.0
+Fence            NaN  80.753425         1179.0             5.0
+FireplaceQu      NaN  47.260274          690.0             6.0
+GarageType    Attchd   5.547945           81.0             7.0
+GarageCond        TA   5.547945           81.0             6.0
+GarageQual        TA   5.547945           81.0             6.0
+GarageFinish     Unf   5.547945           81.0             4.0
+BsmtFinType2     Unf   2.602740           38.0             7.0
+BsmtExposure      No   2.602740           38.0             5.0
+BsmtFinType1     Unf   2.534247           37.0             7.0
+BsmtQual          TA   2.534247           37.0             5.0
+BsmtCond          TA   2.534247           37.0             5.0
+MasVnrType      None   0.547945            8.0             5.0
+Electrical     SBrkr   0.068493            1.0             6.0
+\end{Verbatim}
+\end{tcolorbox}
+        
+    List the missing \% in Numerical Features along with Zeros Count in the
+Dataset
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data\PYZus{}num\PYZus{}mis}\PY{o}{=}\PY{n}{data\PYZus{}num}\PY{p}{[}\PY{n}{data\PYZus{}num}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{]}
+\PY{n}{data\PYZus{}num\PYZus{}mis}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{7}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+              Missing\_\%  Missing\_Count     Zero\_\%  Zeros\_Count  \textbackslash{}
+Feature\_Name
+LotFrontage   17.739726          259.0   0.000000          0.0
+MasVnrArea     0.547945            8.0  58.972603        861.0
+GarageYrBlt    5.547945           81.0   0.000000          0.0
+
+              Distinct\_Count         Mean  Std\_From\_Mean  Median  \textbackslash{}
+Feature\_Name
+LotFrontage            111.0    70.049958      24.284752    69.0
+MasVnrArea             328.0   103.685262     181.066207     0.0
+GarageYrBlt             98.0  1978.506164      24.689725  1980.0
+
+              Std\_From\_Median
+Feature\_Name
+LotFrontage               NaN
+MasVnrArea                NaN
+GarageYrBlt               NaN
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Compare Missing Percentage Vs Zero Percentage in Numerical Features
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{data\PYZus{}num}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zero\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Missing\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{22}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+<matplotlib.axes.\_subplots.AxesSubplot at 0x2929bac3e10>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    List the Features that contains more than 50 \% Zero Values
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data\PYZus{}num}\PY{p}{[}\PY{n}{data\PYZus{}num}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zero\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{50}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{by}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zero\PYZus{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{23}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+               Missing\_\%  Missing\_Count     Zero\_\%  Zeros\_Count  \textbackslash{}
+Feature\_Name
+PoolArea        0.000000            0.0  99.520548       1453.0
+3SsnPorch       0.000000            0.0  98.356164       1436.0
+LowQualFinSF    0.000000            0.0  98.219178       1434.0
+MiscVal         0.000000            0.0  96.438356       1408.0
+BsmtHalfBath    0.000000            0.0  94.383562       1378.0
+ScreenPorch     0.000000            0.0  92.054795       1344.0
+BsmtFinSF2      0.000000            0.0  88.561644       1293.0
+EnclosedPorch   0.000000            0.0  85.753425       1252.0
+HalfBath        0.000000            0.0  62.534247        913.0
+MasVnrArea      0.547945            8.0  58.972603        861.0
+BsmtFullBath    0.000000            0.0  58.630137        856.0
+2ndFlrSF        0.000000            0.0  56.780822        829.0
+WoodDeckSF      0.000000            0.0  52.123288        761.0
+
+               Distinct\_Count        Mean  Std\_From\_Mean  Median  \textbackslash{}
+Feature\_Name
+PoolArea                  8.0    2.758904      40.177307     0.0
+3SsnPorch                20.0    3.409589      29.317331     0.0
+LowQualFinSF             24.0    5.844521      48.623081     0.0
+MiscVal                  21.0   43.489041     496.123024     0.0
+BsmtHalfBath              3.0    0.057534       0.238753     0.0
+ScreenPorch              76.0   15.060959      55.757415     0.0
+BsmtFinSF2              144.0   46.549315     161.319273     0.0
+EnclosedPorch           120.0   21.954110      61.119149     0.0
+HalfBath                  3.0    0.382877       0.502885     0.0
+MasVnrArea              328.0  103.685262     181.066207     0.0
+BsmtFullBath              4.0    0.425342       0.518911     0.0
+2ndFlrSF                417.0  346.992466     436.528436     0.0
+WoodDeckSF              274.0   94.244521     125.338794     0.0
+
+               Std\_From\_Median
+Feature\_Name
+PoolArea             40.271985
+3SsnPorch            29.515066
+LowQualFinSF         48.973318
+MiscVal             498.026755
+BsmtHalfBath          0.245592
+ScreenPorch          57.757054
+BsmtFinSF2          167.905425
+EnclosedPorch        64.945081
+HalfBath              0.632130
+MasVnrArea                 NaN
+BsmtFullBath          0.671050
+2ndFlrSF            557.712624
+WoodDeckSF          156.837275
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Outliers Plot the Ouliers in the Data set in either direction in
+Numerical Features Min\_Outlier and Max\_Outlier 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{cm}
+\PY{n}{cmap} \PY{o}{=} \PY{n}{cm}\PY{o}{.}\PY{n}{get\PYZus{}cmap}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jet}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                   
+\PY{n}{data1} \PY{o}{=} \PY{n}{get\PYZus{}outlier\PYZus{}num}\PY{p}{(}\PY{n}{train}\PY{p}{)} 
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{by}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Max\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,} \PY{n}{stacked}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Outliers Count in Min \PYZam{} Max Direction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{colormap}\PY{o}{=}\PY{n}{cmap}\PY{p}{,} \PY{n}{ylim}\PY{o}{=}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{,}\PY{l+m+mi}{150}\PY{p}{]}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Count Of Outliers}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Feature Name}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{10}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0, 0.5, 'Feature Name')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Ouliers Stat Summary in either direction of Numerical Features 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Min\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Min\PYZus{}Side\PYZus{}Outlier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\PY{n}{data1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{11}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+              Min\_Side\_Outlier  Max\_Side\_Outlier
+Feature\_Name
+MSSubClass                 0.0             103.0
+OpenPorchSF                0.0              77.0
+LotArea                    1.0              67.0
+SalePrice                  0.0              61.0
+LotFrontage               42.0              46.0
+GrLivArea                  0.0              31.0
+BsmtUnfSF                  0.0              29.0
+TotalBsmtSF               37.0              24.0
+GarageArea                 0.0              21.0
+1stFlrSF                   0.0              20.0
+BsmtFinSF1                 0.0               7.0
+BedroomAbvGr               0.0               1.0
+TotRmsAbvGrd               0.0               1.0
+OverallQual                2.0               0.0
+YearBuilt                  7.0               0.0
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Multicollinearity POSITIVE CORELATION : If an increase in a feature A
+leads to increase in Feature B , then they are posivitely corelated. A
+value 1 means perfect positive corelation.' NEGATIVE COREALTION : If an
+increase in feature A leads to decrease in feature B , then they are
+negatively corelated. A value -1 means perfect negative corelation' 
+
+    List the Features that have positive corelation and having covariance
+\textgreater{} 0.7
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data1}\PY{o}{=}\PY{n}{Co\PYZus{}Variance\PYZus{}Info\PYZus{}ex}\PY{p}{(}\PY{n}{train}\PY{p}{,}\PY{l+m+mf}{0.7}\PY{p}{)}
+\PY{n}{data1}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Co\PYZus{}Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{12}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+              A            B  Co\_Variance
+0      1stFlrSF  TotalBsmtSF     0.819530
+1   GarageYrBlt    YearBuilt     0.825667
+2  TotRmsAbvGrd    GrLivArea     0.825489
+3    GarageCars   GarageArea     0.882475
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data1}\PY{o}{=}\PY{n}{Co\PYZus{}Variance\PYZus{}Info}\PY{p}{(}\PY{n}{train}\PY{p}{,}\PY{l+m+mf}{0.7}\PY{p}{)}
+\PY{n}{matrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{tril}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{data1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{n}{annot} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,}\PY{n}{annot\PYZus{}kws} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{\PYZcb{}}\PY{p}{,}
+                 \PY{n}{cmap}\PY{o}{=}\PY{n}{sns}\PY{o}{.}\PY{n}{diverging\PYZus{}palette}\PY{p}{(} \PY{l+m+mi}{60}\PY{p}{,} \PY{l+m+mi}{360}\PY{p}{,} \PY{n}{n}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,}\PY{n}{square}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{mask}\PY{o}{=}\PY{n}{matrix}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xticklabels}\PY{p}{(}\PY{n}{ax}\PY{o}{.}\PY{n}{get\PYZus{}xticklabels}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{45}\PY{p}{,} \PY{n}{horizontalalignment}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}yticklabels}\PY{p}{(}\PY{n}{ax}\PY{o}{.}\PY{n}{get\PYZus{}yticklabels}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{horizontalalignment}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Correlation among Features }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Q. Which Features have more imapct on Target Variable [i.e Sales Price ] }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Q. Which Features have more imapct on Target Variable [i.e Sales Price ]
+\end{Verbatim}
+
+    Frequncy Distribution in Categorical Features
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data1} \PY{o}{=} \PY{n}{freq\PYZus{}dist1}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{idx} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{index}
+\PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{data1}\PY{o}{.}\PY{n}{values}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{data1}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x} \PY{p}{:} \PY{n}{x} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{n}{idx}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{n}{data1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{by}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{ax} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{barh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{18}\PY{p}{)}\PY{p}{,} \PY{n}{stacked}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{xlim}\PY{o}{=}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{110}\PY{p}{]}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{sort\PYZus{}columns}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{c+c1}{\PYZsh{}, colormap=cmap)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{data1}\PY{o}{.}\PY{n}{index}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{spines}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{top}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{spines}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{spines}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n}{which}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{major}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Frequecy of Categories in a Feature}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{16}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'Frequecy of Categories in a Feature')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+     From the above Plot We can see the Frequecy of Categories Below is the
+List of Features - Contains Numer Of Categories \& Mode and \% 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data1} \PY{o}{=} \PY{n}{freq\PYZus{}dist1}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature\PYZus{}Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{idx} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{index}
+\PY{n}{data1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{data1}\PY{o}{.}\PY{n}{values}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{data1}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x} \PY{p}{:} \PY{n}{x} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{n}{idx}\PY{p}{)}
+\PY{n}{data1} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{n}{data1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{80}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{by}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n}{s} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{s2} \PY{o}{=} \PY{n}{data\PYZus{}cat}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n+nb}{list}\PY{p}{(}\PY{n}{data1}\PY{o}{.}\PY{n}{index}\PY{p}{)}\PY{p}{]}
+\PY{n}{data\PYZus{}c} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{s}\PY{p}{,}\PY{n}{s2}\PY{p}{]}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{by}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distinct\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\PY{n}{data\PYZus{}c}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Category\PYZus{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mode}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Category\PYZus{}Name}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Distinct\PYZus{}Count}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No\PYZus{}of\PYZus{}Categories}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{17}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+               Category\_\% Category\_Name  No\_of\_Categories
+Utilities      100.000000        AllPub               2.0
+Street          99.657300          Pave               2.0
+Condition2      99.040439          Norm               8.0
+RoofMatl        98.286498       CompShg               8.0
+Heating         97.875257          GasA               6.0
+LandSlope       94.722413           Gtl               3.0
+CentralAir      93.557231             Y               2.0
+Functional      93.214531           Typ               7.0
+PavedDrive      91.843729             Y               3.0
+Electrical      91.432488         SBrkr               6.0
+GarageCond      90.884167            TA               6.0
+LandContour     89.856066           Lvl               4.0
+GarageQual      89.856066            TA               6.0
+BsmtCond        89.856066            TA               5.0
+ExterCond       87.868403            TA               5.0
+SaleType        86.840302            WD               9.0
+Condition1      86.360521          Norm               9.0
+BsmtFinType2    86.086361           Unf               7.0
+BldgType        83.618917          1Fam               5.0
+SaleCondition   82.111035        Normal               6.0
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+\PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SalePrice}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.5} \PY{p}{]}
+\PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SalePrice}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+\PY{n}{cat\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{num\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SalePrice}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{index}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{feature} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SalePrice}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+        \PY{k}{if} \PY{n}{data\PYZus{}num}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distinct\PYZus{}Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{l+m+mi}{20} \PY{p}{:}
+            \PY{n}{cat\PYZus{}list} \PY{o}{+}\PY{o}{=} \PY{p}{[}\PY{n}{feature}\PY{p}{]}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{num\PYZus{}list} \PY{o}{+}\PY{o}{=} \PY{p}{[}\PY{n}{feature}\PY{p}{]}
+\PY{c+c1}{\PYZsh{}cat\PYZus{}list}
+\PY{c+c1}{\PYZsh{}num\PYZus{}list}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Find Out the Categorical Features in the Numerical Features \& having
+more imapct on target variable 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{l} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{cat\PYZus{}list}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{ncols}\PY{o}{=}\PY{n}{l}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{18}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{cat\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SalePrice}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{train}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_35_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{l} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{num\PYZus{}list}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{ncols}\PY{o}{=}\PY{n}{l}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{18}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{scatterplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{num\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SalePrice}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{hue}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SalePrice}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{train}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{axs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
